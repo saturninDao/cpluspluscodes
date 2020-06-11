@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <iostream>
+#include <fstream>
  
 using namespace std;
 
@@ -32,8 +33,31 @@ void genPrimes(int argc,char** argv){
         file << i << endl;
 }
 
+void prime_factors(int argc,char** argv){
+    ifstream inFile;
+    int nombre;
+    // On verifie que l'utilisateur a rentré un nom de fichier
+    if(argc<2){
+        cout << "Entrez un nom de fichier contenant vos nombres a decomposer \n\n";
+    }
+        
+    inFile.open(argv[1]);
+    if(!inFile){
+        cout << "Probleme lors de l'ouverture du fichier\n\n";
+        exit(1);
+    }
+    
+    while (inFile >> nombre)
+    {
+        cout << nombre << endl;
+    }
+    
+
+}
+
 int main(int argc, char** argv){
 
-genPrimes(argc,argv);
+// genPrimes(argc,argv);
+prime_factors(argc,argv);
     
 }
