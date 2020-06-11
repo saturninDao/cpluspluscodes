@@ -2,23 +2,14 @@
 #include <iostream>
  
 using namespace std;
-//Initialisations
-int nombreCalcule=0;
-bool tousLesNombres[0];
 
-void print(ostream& ostr) {
-    for (int i=0; i<nombreCalcule; i++)
-    if (!tousLesNombres[i])
-        ostr << i << endl;
-}
-
-int main(int argc, char** argv){
-
+void genPrimes(int argc,char** argv){
+        //Initialisations
+    int nombreCalcule=0;
     // On verifie que l'utilisateur a rentré le nombre n
     if(argc<2){
         cout << "Entrez un nombre n bits \n\n";
     }
-
     nombreCalcule = pow(2,atoi(argv[1]));
     bool tousLesNombres[nombreCalcule]; // Notre tableau de nombres
     tousLesNombres[0] = true; // 0 n'est pas premier
@@ -35,12 +26,14 @@ int main(int argc, char** argv){
           multiple += i;
         }
     }
-
+    ofstream file("hello.txt");
     for (int i=0; i<nombreCalcule; i++)
     if (!tousLesNombres[i])
-        cout << i << endl;
+        file << i << endl;
+}
 
-    ofstream file("hello.txt");
-    print(file);
+int main(int argc, char** argv){
+
+genPrimes(argc,argv);
     
 }
