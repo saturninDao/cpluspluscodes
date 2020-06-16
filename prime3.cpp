@@ -3,10 +3,13 @@
 #include <fstream>
  
 using namespace std;
+    string line,linePrime;
+    ifstream inFile;
+    ifstream primeFile;
 
 void genPrimes(int argc,char** argv){
-        //Initialisations
-    int nombreCalcule=0;
+    //Initialisations
+    long int nombreCalcule=0;
     // On verifie que l'utilisateur a rentré le nombre n
     if(argc<2){
         cout << "Entrez un nombre n bits \n\n";
@@ -16,10 +19,10 @@ void genPrimes(int argc,char** argv){
     tousLesNombres[0] = true; // 0 n'est pas premier
     tousLesNombres[1] = true; // 1 n'est pas premier
 
-    for (int i=2; i<nombreCalcule; i++)
+    for (long int i=2; i<nombreCalcule; i++)
     tousLesNombres[i] = false;
 
-    for (int i=2; i<nombreCalcule; i++)
+    for (long int i=2; i<nombreCalcule; i++)
     if (!tousLesNombres[i]) {
         int multiple = 2 * i;
         while (multiple < nombreCalcule) {
@@ -28,14 +31,31 @@ void genPrimes(int argc,char** argv){
         }
     }
     ofstream file("hello.txt");
-    for (int i=0; i<nombreCalcule; i++)
+    for (long int i=0; i<nombreCalcule; i++)
     if (!tousLesNombres[i])
         file << i << endl;
 }
 
+
+    void tache(){
+                   
+            while (getline(inFile, line) )
+        {
+            cout << line << endl;
+                while (getline(primeFile, linePrime))
+                {
+                    cout << linePrime << endl;
+                    tache();
+                }
+                //tache();
+        }
+    }
+
 void prime_factors(int argc,char** argv){
-    ifstream inFile;
-    int nombre;
+
+    primeFile.open("hello.txt");
+    long int nombre;
+    long int primeNombre;
     // On verifie que l'utilisateur a rentré un nom de fichier
     if(argc<2){
         cout << "Entrez un nom de fichier contenant vos nombres a decomposer \n\n";
@@ -46,12 +66,8 @@ void prime_factors(int argc,char** argv){
         cout << "Probleme lors de l'ouverture du fichier\n\n";
         exit(1);
     }
-    
-    while (inFile >> nombre)
-    {
-        cout << nombre << endl;
-    }
-    
+
+    tache();
 
 }
 
