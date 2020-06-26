@@ -58,13 +58,14 @@ void decomposition(unsigned long long int number, unsigned long long int tabPrem
 /*for(int i=2; i <= number/i; i++){*/
     // cout << tabPremiers[i] << "\n";
 
+   cout << number << ": ";
    for(int i=0;i<6542;i++){
       if(tabPremiers[i]<number){
            
             while(number%tabPremiers[i] == 0) 
             {
                 number = number/tabPremiers[i];
-                cout << "Factor: " << tabPremiers[i] << endl;
+                cout << "" << tabPremiers[i] << " ";
             }
             //cout<<"i= "<< tabPremiers[i] <<" number= " << number <<endl;
       }
@@ -73,7 +74,7 @@ void decomposition(unsigned long long int number, unsigned long long int tabPrem
 /*}*/
   
  if(number > 1) {
- cout << "Factorf: " << number << endl;
+ cout << "" << number << " ";
  }
 
 }
