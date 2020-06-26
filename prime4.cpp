@@ -3,6 +3,15 @@
 #include <bits/stdc++.h>
 #include <iostream>
 #include <fstream>
+
+/*
+
+3-/ TEMPS D'EXECUTION 
+real	0m0,008s
+user	0m0,004s
+sys	0m0,004s
+
+*/
  
 using namespace std;
 string line,linePrime;
@@ -10,6 +19,7 @@ ifstream inFile,primeFile;
 // unsigned long long int tabNombresADecomposer[6];
 unsigned long long int tabNombresADecomposer[6];
 unsigned long long int tabNombresPremiers[6542];
+
 
 
 class MyThreadDecomposition: public QThread {
