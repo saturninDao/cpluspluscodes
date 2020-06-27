@@ -3,13 +3,19 @@
 #include <bits/stdc++.h>
 #include <iostream>
 #include <fstream>
+#include <array> 
 
 /*
 
 3-/ TEMPS D'EXECUTION 
 real	0m0,008s
 user	0m0,004s
-sys	0m0,004s
+sys	    0m0,004s
+
+real	0m0,009s
+user	0m0,005s
+sys	    0m0,004s
+
 
 */
  
@@ -17,7 +23,8 @@ using namespace std;
 string line,linePrime;
 ifstream inFile,primeFile;
 // unsigned long long int tabNombresADecomposer[6];
-unsigned long long int tabNombresADecomposer[6];
+// unsigned long long int tabNombresADecomposer[6];
+array<unsigned long long int, 10> tabNombresADecomposer;
 unsigned long long int tabNombresPremiers[6542];
 
 
@@ -28,9 +35,15 @@ class MyThreadDecomposition: public QThread {
     void run() {
         if (inFile.is_open())
         {
-            for (int i = 0; i < 6; i++)
+
+            if(tabNombresADecomposer.empty()){
+                cout << "jes suis vide!";
+            }
+            
+            for (int i = 0; i < 10; i++)
             {
-                inFile >> tabNombresADecomposer[i];
+                // inFile >> tabNombresADecomposer[i];
+                inFile >> tabNombresADecomposer.at(i);
                 //cout << tabNombresADecomposer[i] << " ";
             }
             inFile.close(); // CLose input file
@@ -112,9 +125,15 @@ void prime_factors(int argc,char** argv){
     threadPremiers.start();
     threadPremiers.wait();
     
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 10; i=i+2)
     {
         decomposition(tabNombresADecomposer[i],tabNombresPremiers);
+        cout << "\n\n";
+    }
+
+    for (int j = 1; j < 10; j=j+2)
+    {
+        decomposition(tabNombresADecomposer[j],tabNombresPremiers);
         cout << "\n\n";
     }
 
@@ -126,12 +145,6 @@ void prime_factors(int argc,char** argv){
     // Faison notre traitement
 
     // decomposition(7);
-
-  
-
-
-
-
 }
 
 int main(int argc, char** argv){
