@@ -211,6 +211,29 @@ class DecompUnNombre: public QThread {
    }
 };
 
+class DecompSimultaneDeuxNombres: public QThread {
+   private: int i; 
+   private: array<unsigned long long int, NB> tabNombresADecomposer;
+   private: array<unsigned long long int, 6542> tabNombresPremiers;
+
+   void run(){
+        for (int k = i; k < NB; k=k+2)
+        {
+            cout << tabNombresADecomposer[k] << " : ";
+            decomposition(tabNombresADecomposer.at(k),tabNombresPremiers);
+            cout << "\n\n";
+        }
+   }
+   public:
+        DecompSimultaneDeuxNombres(int i, 
+        array<unsigned long long int, NB> tabNombresADecomposer, 
+        array<unsigned long long int, 6542> tabNombresPremiers) : QThread(), 
+        i(i), 
+        tabNombresADecomposer(tabNombresADecomposer),
+        tabNombresPremiers(tabNombresPremiers) {};
+};
+
+
 void prime_factors(int argc,char** argv){
 
     primeFile.open("hello.txt");
@@ -256,15 +279,24 @@ void prime_factors(int argc,char** argv){
     thread2.start();
     thread2.wait();
     }
-    /*
+    */
+
+    // Encore plus de threads¶
+
+    DecompSimultaneDeuxNombres thread1(0,tabNombresADecomposer,tabNombresPremiers);
+    DecompSimultaneDeuxNombres thread2(1,tabNombresADecomposer,tabNombresPremiers);
+    thread1.start();
+    thread1.wait();
+    thread2.start();
+    thread2.wait();
 
     // Serie
-    /**/
+    /*
     for(int k = 0; k < NB; k++){
         decomposition(tabNombresADecomposer.at(k),tabNombresPremiers);
         cout << " \n";
     }
-    /**/
+    */
 
 
 }
