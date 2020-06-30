@@ -109,7 +109,8 @@ ifstream inFile,primeFile;
 // unsigned long long int tabNombresADecomposer[6];
 // unsigned long long int tabNombresADecomposer[6];
 array<unsigned long long int, NB> tabNombresADecomposer;
-array<unsigned long long int, 6542> tabNombresPremiers;
+array<uint64_t, 6542> tabNombresPremiers;
+uint64_t factorTab[6542];
 
 
 
@@ -190,6 +191,54 @@ void decomposition(unsigned long long int number, array<unsigned long long int, 
 
 }
 
+int computePrimeFactors(uint64_t n,uint64_t* factorTab){
+    cout << n << ": ";
+    int nombreDeFacteursPremiers=0;
+
+    for(uint64_t i=0;i<6542;i++){
+              factorTab[i] = i;
+      if(tabNombresPremiers.at(i)<n){
+           
+            while(n%tabNombresPremiers[i] == 0) 
+            {
+                n = n/tabNombresPremiers[i];
+                cout << "" << tabNombresPremiers[i] << " ";
+                nombreDeFacteursPremiers++;
+                
+            }
+            //cout<<"i= "<< tabPremiers[i] <<" number= " << number <<endl;
+          
+            //cout << " nbDeFacteurPremier:" << nombreDeFacteursPremiers <<"\n";
+      }
+    //   factorTab[i] = tabNombresPremiers[i];
+
+   }
+
+/*}*/
+  
+    if(n > 1) {
+    cout << "" << n << " ";
+    nombreDeFacteursPremiers++;
+    //int tailleDuTableau = sizeof(factorTab)/sizeof(factorTab[0]);
+    //factorTab[tailleDuTableau+1] = n;
+    //factorTab[tailleDuTableau] = n;
+    }
+
+    // return sizeof(factorTab) / sizeof(factorTab[0]) ;
+    int test[10];
+    for (int i = 0; i < 10; i++)
+    {
+        factorTab[i] = i;
+    }
+    
+    cout << " Nombre de facteurs premiers: " << nombreDeFacteursPremiers;
+    return sizeof(factorTab)/sizeof(factorTab[0]);
+    //return 0;
+}
+
+
+
+
 class DecompUnNombre: public QThread {
    private: int i; 
    private: array<unsigned long long int, NB> tabNombresADecomposer;
@@ -214,20 +263,23 @@ class DecompUnNombre: public QThread {
 class DecompSimultaneDeuxNombres: public QThread {
    private: int i; 
    private: array<unsigned long long int, NB> tabNombresADecomposer;
-   private: array<unsigned long long int, 6542> tabNombresPremiers;
+   private: array<uint64_t, 6542> tabNombresPremiers;
 
    void run(){
+       int test;
         for (int k = i; k < NB; k=k+2)
         {
             cout << tabNombresADecomposer[k] << " : ";
-            decomposition(tabNombresADecomposer.at(k),tabNombresPremiers);
+            // decomposition(tabNombresADecomposer.at(k),tabNombresPremiers);
+            test = computePrimeFactors(tabNombresADecomposer.at(k),factorTab);
             cout << "\n\n";
         }
+        cout << "Retour de la fonction compute:" << test;
    }
    public:
         DecompSimultaneDeuxNombres(int i, 
         array<unsigned long long int, NB> tabNombresADecomposer, 
-        array<unsigned long long int, 6542> tabNombresPremiers) : QThread(), 
+        array<uint64_t, 6542> tabNombresPremiers) : QThread(), 
         i(i), 
         tabNombresADecomposer(tabNombresADecomposer),
         tabNombresPremiers(tabNombresPremiers) {};
@@ -283,20 +335,22 @@ void prime_factors(int argc,char** argv){
 
     // Encore plus de threads¶
 
+    /*
     DecompSimultaneDeuxNombres thread1(0,tabNombresADecomposer,tabNombresPremiers);
     DecompSimultaneDeuxNombres thread2(1,tabNombresADecomposer,tabNombresPremiers);
     thread1.start();
     thread1.wait();
     thread2.start();
     thread2.wait();
+    */
 
     // Serie
-    /*
+    /**/
     for(int k = 0; k < NB; k++){
-        decomposition(tabNombresADecomposer.at(k),tabNombresPremiers);
+        computePrimeFactors(tabNombresADecomposer.at(k),factorTab);
         cout << " \n";
     }
-    */
+    /**/
 
 
 }
